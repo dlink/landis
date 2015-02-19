@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Payment  Information</title>
+	<link rel="shortcut icon" href="demos/images/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="demos/images/apple-touch-icon.png">
+
+
+	<!-- jQuery (required) -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+
+	<!-- Syntax highlighting -->
+	<link rel="stylesheet" href="demos/prettify/prettify.css" media="screen">
+	<script src="demos/prettify/prettify.js"></script>
+
+	<!-- Anything Slider optional plugins -->
+	<script src="js/jquery.easing.1.2.js"></script>
+	<!-- http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js -->
+	<script src="js/swfobject.js"></script>
+
+	<!-- Demo stuff -->
+	<link rel="stylesheet" href="demos/css/page.css" media="screen">
+	<script src="demos/js/jquery.jatt.min.js"></script>
+
+	<!-- AnythingSlider -->
+	<link rel="stylesheet" href="css/anythingslider.css">
+	<script src="js/jquery.anythingslider.js"></script>
+
+	<!-- AnythingSlider video extension; optional, but needed to control video pause/play -->
+	<script src="js/jquery.anythingslider.video.js"></script>
+
+	<!-- Ideally, add the stylesheet(s) you are going to use here,
+	 otherwise they are loaded and appended to the <head> automatically and will over-ride the IE stylesheet below -->
+	<link rel="stylesheet" href="css/theme-metallic.css">
+	<link rel="stylesheet" href="css/theme-minimalist-round.css">
+	<link rel="stylesheet" href="css/theme-minimalist-square.css">
+	<link rel="stylesheet" href="css/theme-construction.css">
+	<link rel="stylesheet" href="css/theme-cs-portfolio.css">
+
+	<script>
+		// Demo functions
+		// **************
+		$(function(){
+
+			prettyPrint();
+
+			// External Link with callback function
+			$("#slide-jump").click(function(){
+				$('#slider2').anythingSlider(4, function(slider){ /* alert('Now on page ' + slider.currentPage); */ });
+				return false;
+			});
+
+			// External Link
+			$("a.muppet").click(function(){
+				$('#slider1').anythingSlider(5);
+				$(document).scrollTop(0); // make the page scroll to the top so you can watch the video
+				return false;
+			});
+
+			// Report Events to console & features list
+			$('#slider1, #slider2').bind('before_initialize initialized swf_completed slideshow_start slideshow_stop slideshow_paused slideshow_unpaused slide_init slide_begin slide_complete', function(e, slider){
+				// show object ID + event (e.g. "slider1: slide_begin")
+				var txt = slider.$el[0].id + ': ' + e.type + ', now on panel #' + slider.currentPage;
+				$('#status').text(txt);
+				if (window.console && window.console.firebug){ console.debug(txt); } // added window.console.firebug to make this work in Opera
+			});
+
+			// Theme Selector (This is really for demo purposes only)
+			var themes = ['minimalist-round','minimalist-square','metallic','construction','cs-portfolio'];
+			$('#currentTheme').change(function(){
+				var theme = $(this).val();
+				$('#slider1').closest('div.anythingSlider')
+					.removeClass( $.map(themes, function(t){ return 'anythingSlider-' + t; }).join(' ') )
+					.addClass('anythingSlider-' + theme);
+				$('#slider1').anythingSlider(); // update slider - needed to fix navigation tabs
+			});
+
+			// Add a slide
+			var imageNumber = 1;
+			$('button.add').click(function(){
+				$('#slider1')
+					.append('<li><img src="demos/images/slide-tele-' + (++imageNumber%2 + 1)  + '.jpg" alt="" /></li>')
+					.anythingSlider(); // update the slider
+			});
+			$('button.remove').click(function(){
+				$('#slider1 > li:not(.cloned):last').remove();
+				$('#slider1').anythingSlider(); // update the slider
+			});
+
+		});
+
+	</script>
+
+	<script>
+		// Set up Sliders
+		// **************
+		$(function(){
+
+			$('#slider1').anythingSlider({
+				theme           : 'metallic',
+				easing          : 'easeInOutBack',
+				navigationFormatter : function(index, panel){
+					return ['Slab', 'Parking Lot', 'Drive', 'Glorius Dawn', 'Bjork?', 'Traffic Circle'][index - 1];
+				},
+				onSlideComplete : function(slider){
+					// alert('Welcome to Slide #' + slider.currentPage);
+				}
+			});
+
+			$('#slider2').anythingSlider({
+				mode                : 'f',   // fade mode - new in v1.8!
+				theme           : 'default',
+				resizeContents      : false, // If true, solitary images/objects in the panel will expand to fit the viewport
+				navigationSize      : 4,     // Set this to the maximum number of visible navigation tabs; false to disable
+				navigationFormatter : function(index, panel){ // Format navigation labels with text
+					return ['Payment Options', 'Coins', 'Ship and Hold', 'Quote #2', 'Image #2'][index - 1];
+				},
+				onSlideBegin: function(e,slider) {
+					// keep the current navigation tab in view
+					slider.navWindow( slider.targetPage );
+				}
+			});
+
+			// tooltips for first demo
+			$.jatt();
+
+		});
+	</script>
+    <link href="defaultForm.css" rel="stylesheet" type="text/css">
+</head>
+<body id="main">
+<div id="logo">
+	<div align="center"><a href="#" ><img src="images/landisBanner.jpg" alt="" width="1200" height="175" border="0" /></a>
+    </div>
+</div>
+<div id="header">
+	<div id="menu" class="container">
+		<ul>
+			<li><a href="index.html" accesskey="1" title="">HOME</a></li>
+		  	<li><a href="orderinfo.html" accesskey="1" title="">ORDER</a></li>
+			<li><a href="shipinfo.html" accesskey="2" title="">SHIP</a></li>
+			<li class="current_page_item"><a href="paymentinfo.html" accesskey="3" title="">PAYMENT</a></li>
+			<li><a href="faq.html" accesskey="4" title="">FAQ</a></li>
+			<li><a href="prices.html" accesskey="5" title="">LIVE MARKET UPDATES</a></li>
+            <li><a href="news.html" accesskey="6" title="">INDUSTRY NEWS</a></li>
+            <li><a href="about.html" accesskey="7" title="">ABOUT</a></li>
+            <li><a href="contact.html" accesskey="8" title="">CONTACT</a></li>
+	  </ul>
+	</div>
+</div>
+<div id="page" class="container">
+<div id="content">
+			<!-- AnythingSlider #2 -->
+			<ul id="slider2">
+
+				<li class="panel1">
+					<div>
+				  <div class="textSlide">
+                 
+<h2 align="center">PAYMENT OPTIONS OFFERED</h2>
+<h2 align="center"><br>
+  <span align="left"></span></h2>
+<span align="left"><center>
+<table width="60%">
+<tr>
+  <td width="32%"  align="left"valign="top"><img src="images/goldBullet.jpg" width="13" height="13" border="0"> Check</td>
+  <td width="36%" align="left" valign="top"><img src="images/goldBullet.jpg" width="13" height="13" border="0"> Bullion</td>
+  <td width="32%" align="left" valign="top"><img src="images/goldBullet.jpg" width="13" height="13" border="0"> Gold Coins</td>
+</tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr>
+  <td align="left" valign="top"><img src="images/goldBullet.jpg" width="13" height="13" border="0"> Bank Wire</td>
+  <td align="left" valign="top"><img src="images/goldBullet.jpg" width="13" height="13" border="0"> Certified Check</td>
+  <td align="left" valign="top"><img src="images/goldBullet.jpg" width="13" height="13" border="0"> Cash*</td>
+</tr>
+</table>
+</center>
+<br>
+			</span>
+<p>If you choose the <a href="http://www.agodfrey.com/demo/lrc/paymentinfo.html#&panel1-2">coin payment</a>, we simply convert the dollar value owed from check into your choice of coin with any balance paid by check unless directed otherwise. Shipping is always insured using either the post office's Express or Registered Mail service.</p>
+<h3 align="left"><strong>Processing Guidelines:</strong><br>
+</h3>
+<p align="left">Scrap payment varies based on volume and type of material received. <br>
+  Metal value determination of your scrap is generally pegged to the fine metal prices of the Second London Fix. A few exceptions include filings, sweeps and orthodontics, which take a little longer to process and are pegged to the completion date. </p> 
+<div align="center"><img src="images/coinsAnimated.gif" alt="Canadian Maple Leaf Gold Coin" width="200" height="200"></div>
+<p align="left">*Restrictions apply</p>
+  </div>
+				</li>
+
+				<li class="panel2">
+					<div class="textSlide">
+                    <h2 align="center">COINS</h2>
+                    <blockquote>
+                      <p align="left">Have you considered gold coins as an alternative payment option when selling your scrap? Coins serve as a practical way to stay invested in gold and are ideal as wedding and graduation gifts.</p>
+                      <p align="left">Several countries, including the U.S., Canada, China and South Africa, mint coins whose value is based on their fine gold content as opposed to collectors' coins whose value is based on their age and condition. </p>
+                      <p align="center">We offer coins in four minted sizes: one ounce, half ounce, quarter ounce and one-tenth ounce. Their value fluctuates with the daily price of fine gold. They are also deemed to have a premium or "added value" which varies, averaging from four percent for a one ounce coin up to ten percent for a one-tenth ounce coin. This premium is part of the coin's wholesale cost. We charge no additional commission or service fee. </p>
+                    </blockquote>
+                    <p align="center">&nbsp;</p>
+<div align="center"></div>
+<blockquote>
+  <h3 align="left">We offer the following gold coins as alternative payment options:</h3>
+</blockquote>
+<p>&nbsp;</p>
+<span align="center">
+<center>
+<table width="65%">
+<tr><td width="68%"><p>United States: American Eagle</p></td>
+  <td width="32%"><div align="right"><img src="SOURCE/usGoldEagleCoin.jpg" width="206" height="102"></div></td>
+</tr>
+<tr><td><p>Canada: Canadian Maple Leaf</p></td><td><div align="right"><img src="SOURCE/canadianMapleLeafCoin.png" width="102" height="102"><img src="images/canadianHeads.jpg" width="102" height="102"></div></td>
+  </tr>
+<tr><td><p>South Africa: Kruggerand</p></td><td><div align="right"><img src="SOURCE/kruggerandCoin.jpg" width="201" height="102"></div></td>
+  </tr>
+<tr><td><p>China: Panda</p></td><td><div align="right"><img src="SOURCE/chineseCoin.jpg" width="204" height="102"></div></td>
+  </tr>
+<tr>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+</tr>
+</table>
+</center>
+</span>
+
+<p>&nbsp;</p>
+<blockquote>
+  <p align="left">Also available: Swiss credit bars & other ingot bars of various weights. </p>
+  <p align="left">If you choose the coin payment option, we simply convert the dollar value owed from check into your choice of coin. Any remaining balance is paid by check unless directed otherwise.</p>
+</blockquote>
+</div>
+<li class="panel4">
+					<div class="textSlide">
+						<h2 align="center">SHIP + HOLD</h2>
+                        <blockquote>
+                          <p>If you prefer, ship us your scrap with an indicated selling price. We'll store it untouched until gold hits your target. Processing will be immediate and you can take advantage of any sudden market spike.</p>
+                        </blockquote>
+                        <h3 align="center"><a href="pickupForm.html">Schedule a UPS</a><br>
+                          Call 800-433-6192 or Fax 631-728-3642<br>
+                        <a href="mailto:info@landisrefining.com">Email Us</a></h3>
+                      <p align="center">&nbsp;</p>
+                        <blockquote>
+                          <p>Shipping is always insured using either the post office's Express or Registered Mail service.</p>
+                          <p>Stay up to date with information regarding the gold price <b><a href="prices.html">here</a></b> or follow us on Twitter.</p>
+                        </blockquote>
+                        <center>
+                          <img src="images/31.jpg" width="363" height="332" border="0">
+                          </center>
+                      
+                      <p>&nbsp;</p>
+                      
+                      <!-- END AnythingSlider #2 -->
+
+		<br>
+	</div>
+</div>
+    </div>
+</body>
+</html>

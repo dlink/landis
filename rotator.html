@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>AnythingSlider</title>
+	<link rel="shortcut icon" href="demos/images/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="demos/images/apple-touch-icon.png">
+
+	<!-- jQuery (required) -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+
+	<!-- Syntax highlighting -->
+	<link rel="stylesheet" href="demos/prettify/prettify.css" media="screen">
+	<script src="demos/prettify/prettify.js"></script>
+
+	<!-- Anything Slider optional plugins -->
+	<script src="js/jquery.easing.1.2.js"></script>
+	<!-- http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js -->
+	<script src="js/swfobject.js"></script>
+
+	<!-- Demo stuff -->
+	<link rel="stylesheet" href="demos/css/page.css" media="screen">
+	<script src="demos/js/jquery.jatt.min.js"></script>
+
+	<!-- AnythingSlider -->
+	<link rel="stylesheet" href="css/anythingslider.css">
+	<script src="js/jquery.anythingslider.js"></script>
+
+	<!-- AnythingSlider video extension; optional, but needed to control video pause/play -->
+	<script src="js/jquery.anythingslider.video.js"></script>
+
+	<!-- Ideally, add the stylesheet(s) you are going to use here,
+	 otherwise they are loaded and appended to the <head> automatically and will over-ride the IE stylesheet below -->
+	<link rel="stylesheet" href="css/theme-metallic.css">
+	<link rel="stylesheet" href="css/theme-minimalist-round.css">
+	<link rel="stylesheet" href="css/theme-minimalist-square.css">
+	<link rel="stylesheet" href="css/theme-construction.css">
+	<link rel="stylesheet" href="css/theme-cs-portfolio.css">
+
+	<script>
+		// Demo functions
+		// **************
+		$(function(){
+
+			prettyPrint();
+
+			// External Link with callback function
+			$("#slide-jump").click(function(){
+				$('#slider2').anythingSlider(4, function(slider){ /* alert('Now on page ' + slider.currentPage); */ });
+				return false;
+			});
+
+			// External Link
+			$("a.muppet").click(function(){
+				$('#slider1').anythingSlider(5);
+				$(document).scrollTop(0); // make the page scroll to the top so you can watch the video
+				return false;
+			});
+
+			// Report Events to console & features list
+			$('#slider1, #slider2').bind('before_initialize initialized swf_completed slideshow_start slideshow_stop slideshow_paused slideshow_unpaused slide_init slide_begin slide_complete', function(e, slider){
+				// show object ID + event (e.g. "slider1: slide_begin")
+				var txt = slider.$el[0].id + ': ' + e.type + ', now on panel #' + slider.currentPage;
+				$('#status').text(txt);
+				if (window.console && window.console.firebug){ console.debug(txt); } // added window.console.firebug to make this work in Opera
+			});
+
+			// Theme Selector (This is really for demo purposes only)
+			var themes = ['minimalist-round','minimalist-square','metallic','construction','cs-portfolio'];
+			$('#currentTheme').change(function(){
+				var theme = $(this).val();
+				$('#slider1').closest('div.anythingSlider')
+					.removeClass( $.map(themes, function(t){ return 'anythingSlider-' + t; }).join(' ') )
+					.addClass('anythingSlider-' + theme);
+				$('#slider1').anythingSlider(); // update slider - needed to fix navigation tabs
+			});
+
+			// Add a slide
+			var imageNumber = 1;
+			$('button.add').click(function(){
+				$('#slider1')
+					.append('<li><img src="demos/images/slide-tele-' + (++imageNumber%2 + 1)  + '.jpg" alt="" /></li>')
+					.anythingSlider(); // update the slider
+			});
+			$('button.remove').click(function(){
+				$('#slider1 > li:not(.cloned):last').remove();
+				$('#slider1').anythingSlider(); // update the slider
+			});
+
+		});
+
+	</script>
+
+	<script>
+		// Set up Sliders
+		// **************
+		$(function(){
+
+			$('#slider1').anythingSlider({
+				theme           : 'metallic',
+				easing          : 'easeInOutBack',
+				navigationFormatter : function(index, panel){
+					return ['Slab', 'Parking Lot', 'Drive', 'Glorius Dawn', 'Bjork?', 'Traffic Circle'][index - 1];
+				},
+				onSlideComplete : function(slider){
+					// alert('Welcome to Slide #' + slider.currentPage);
+				}
+			});
+
+			$('#slider2').anythingSlider({
+				mode                : 'f',   // fade mode - new in v1.8!
+				theme           : 'default',
+				resizeContents      : false, // If true, solitary images/objects in the panel will expand to fit the viewport
+				navigationSize      : 4,     // Set this to the maximum number of visible navigation tabs; false to disable
+				navigationFormatter : function(index, panel){ // Format navigation labels with text
+					return ['Mail in Program', 'Payment', 'Image', 'Quote #2', 'Image #2'][index - 1];
+				},
+				onSlideBegin: function(e,slider) {
+					// keep the current navigation tab in view
+					slider.navWindow( slider.targetPage );
+				}
+			});
+
+			// tooltips for first demo
+			$.jatt();
+
+		});
+	</script>
+</head>
+<body id="main">
+
+			<!-- AnythingSlider #2 -->
+			<ul id="slider2">
+
+				<li class="panel1">
+					<div>
+				  <div class="textSlide">
+                        	<h2>MAIL IN PROGRAM</h2>
+                    <p><b>Scrap metal mailed directly to our plant will receive our prompt attention.</b> Upon receipt, most metals are fully processed within a week.  We have afew exceptions, such as filings and orthodontics, which require a slightly longer processing schedule.</p>
+                            <h3>Five Easy Steps</h3>
+                            <ol>
+                            <li><b>Order our free collecting jar.</b> It's shipped in a reusable box with a prepaid return label. We'll proviceas many jars as you need.  Larger boxes are available for shipping multiple jars</li>
+                            <li><b>Put any scrap you wish to send us in a the jar.</b>Gold and semiprecious can be mixed together.  Teeth can be attached.  There is no minimum.  The jar doesn't have to be full. No liquids, please.</li>
+                            <li><b>Place the jar into the box.</b>Remember to check off your payment option on the label inside the box lid.</li>
+                            <li><b>Our enclosed business reply label fits on top of the box.</b>Fill in your name and address in the upper left hand corner. That's where we'll send your payment unless you indicate otherwise. Forgot to list your return address? Don't worry. Every office has its own account code imprinted on their label.</li>
+                            <li><b>Drop the sealed box in the mail or hand it to your mail carrier.</b> We pay the postage.</li>
+                            </ol>
+
+				  </div>
+				</li>
+
+				<li class="panel2">
+					<div class="textSlide">
+						                        	<h2>PAYMENT</h2>
+
+                            <h3>Payment options offered:</h3>
+                            <ul>
+                            <li>Check</li>
+                            <li>Gold coins</li>
+                            <li>Certified check</li>
+                            <li>Bullion</li>
+                            <li>Bank wire</li>
+                            <li>Cash*</li>
+                            </ul>
+                            <p><b>If you choose the coin payment option, </b>we suimply convert the dollar value owed from check into your choice of coin. Shipping is always insured using either the post office's Express or Registered Mail service.</p>
+                            <h3>Processing Guidelines</h3>
+                            <p>Scrap payment varies based on volume and type of material received.<br>
+                            Metal value determination of your scrap is pegged to the fine metal prices of the Second London Fix on the day of receipt.  Our only exception, filings, sweeps andorthodontincs, which take a little longer to process and are pegged to the completion date.</p>
+
+
+<li class="panel4">
+					<div class="textSlide">
+						<h2>SHIP + HOLD</h2>
+                        <p>If you prefer, ship us your scrp with an indicated sale price. We'll store it untouched until gold hits your target. Processing will be immediate and you can take advantage of any sudden market spike.</p>
+                        <h3>Schedule a UPS or call 800-433-6192</h3>
+                        <p>Shipping is always insured using either the post office's Express or Registered Mail service.</p>
+                        <p>Stay up to date with information regarding the gold price <b>here</b>.</p>
+			<!-- END AnythingSlider #2 -->
+
+		<br>
+	</div>
+</body>
+</html>

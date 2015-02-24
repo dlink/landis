@@ -1,0 +1,5 @@
+id,code,name,description,active,create,last_updated
+1,dentist,Dentist,Dentist,1,2015-02-23,\N
+2,staff,Dentist Staff,Dentist Staff,1,2015-02-23,\N
+3,patient,Patient,Patient,1,2015-02-23,\N
+4,jeweler,Jeweler,Jeweler,1,2015-02-23,\N

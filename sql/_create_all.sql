@@ -1,0 +1,1 @@
+source create_customer_types.sql

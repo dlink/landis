@@ -1,4 +1,4 @@
-id,code,name,description,active,create,last_updated
+id,code,name,description,active,created,last_updated
 1,single,Single Jar,Single Jar,1,2015-02-23,\N
 2,multiple,Multiple Jars,Multiple Jars,1,2015-02-23,\N
 3,mailer,Scrap Mailer,Patient Scrap Mailer,1,2015-02-23,\N

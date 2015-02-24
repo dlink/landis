@@ -1,0 +1,7 @@
+id,type_id,email,first_name,last_name,company,phone,created,last_update
+1,1,jroe@gmail.com,Joe,Roe,Bright Smiles,516-201-4923,2015-02-23,\N
+2,1,jdillion@dillion-dentist.com,Jill,Dillion,Dillion Dentist,201-101-3344,2015-02-23,\N
+3,2,rnorwood@alldent.com,Robert,Norwood,All Dentistry,516-123-4520,2015-02-23,\N
+4,1,abconda@cliftondentistry.com,Abby,Conda,Clifton Dentistry,212-493-2022,2015-02-23,\N
+5,4,seth@sethbartman.com,Seth,Bartman,Seth Bartman Jewelers,718-393-2220,2015-02-23,\N
+6,4,dcooper@hotman.com,Donald,Cooperman,Rague Electronics,,2015-02-23,\N

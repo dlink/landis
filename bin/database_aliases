@@ -1,0 +1,1 @@
+alias ldb='mysql -ulandis -pREDmondrian5 -hlocalhost --database=landis --local-infile=1'

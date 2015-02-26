@@ -1,0 +1,106 @@
+# Books Report Columns Data
+
+columns:
+   - name    : order_data
+     type    : separator
+
+   - name    : order_id
+     select  : o.id
+     type    : integer
+     default : true
+
+   - name    : order_date
+     select  : date(o.order_date)
+     aliases : o
+     type    : date
+     default : true
+
+   - name    : order_time
+     select  : time(o.order_date)
+     aliases : o
+     type    : time
+
+   - name    : order_datetime
+     select  : o.order_date
+     type    : datetime
+
+   - name    : order_month
+     select  : substr(o.order_date, 1, 7)
+     aliases : o
+     group_by: true
+
+   - name    : order_year
+     select  : year(o.order_date)
+     aliases : o
+     type    : integer
+     group_by: true
+
+   # created
+
+   - name    : created
+     select  : date(o.created)
+     type    : date
+     aliases : o
+     default : true
+
+   - name    : created_time
+     select  : time(o.created)
+     aliases : o
+     type    : time
+
+   - name    : created_datetime
+     select  : o.created
+     type    : datetime     
+
+   # last_updated
+   
+   - name    : last_updated
+     select  : date(o.created)
+     aliases : o
+     type    : date
+     default : true
+
+   - name    : last_updated_time
+     select  : time(o.last_updated)
+     aliases : o
+     type    : time
+
+   - name    : last_updated_datetime
+     select  : o.last_updated
+     type    : datetime
+
+   - name    : count
+     select  : '*'
+     aliases : o
+     mode    : aggregate
+     aggregate_func: count
+     type    : integer
+     default : true
+
+
+   ### order_items
+
+   - name    : order_items_data
+     type    : separator
+
+   - name    : order_item_id
+     select  : oi.id
+     type    : integer
+
+   - name    : product_id
+     select  : oi.product_id
+     type    : integer
+
+   - name    : product_code
+     select  : p.code
+
+   - name    : product
+     select  : p.name
+     default : true
+     group_by: true
+
+   - name    : quantity
+     select  : oi.quantity
+     type    : number
+     aggregate_func: sum
+     default : true

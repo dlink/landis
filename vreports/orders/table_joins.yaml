@@ -1,0 +1,6 @@
+table_joins:
+   oi:
+      clause: join order_items oi on o.id = oi.order_id
+   p:
+      require: oi
+      clause: join products p on oi.product_id = p.id

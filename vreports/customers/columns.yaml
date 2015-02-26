@@ -38,9 +38,11 @@ columns:
    - name    : email
      default : true
 
+   # created
+
    - name    : added
      select  : date(c.created)
-     type    : datetime
+     type    : date
      aliases : c
      default : true
 
@@ -52,14 +54,39 @@ columns:
    - name    : added_datetime
      select  : c.created
      type    : datetime     
+
+   - name    : month_added
+     select  : substr(c.created, 1, 7)
+     aliases : c
+     group_by: true
+
+   - name    : year_added
+     select  : year(c.created)
+     aliases : c
+     type    : integer
+     group_by: true
+
+   # last_updated
    
    - name    : last_updated
+     select  : date(c.created)
+     aliases : c
+     type    : date
+     default : true
+
+   - name    : last_updated_time
+     select  : time(c.last_updated)
+     aliases : c
+     type    : time
+
+   - name    : last_updated_datetime
+     select  : c.last_updated
      type    : datetime
 
-   - name   : count
-     select : '*'
-     aliases: c
-     mode   : aggregate
+   - name    : count
+     select  : '*'
+     aliases : c
+     mode    : aggregate
      aggregate_func: count
-     type   : integer
-     default: true
+     type    : integer
+     default : true

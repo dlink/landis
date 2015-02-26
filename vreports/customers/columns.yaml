@@ -18,10 +18,19 @@ columns:
    - name    : company
      default : true
 
+   - name    : type_id
+     type    : integer
+
+   - name    : type_code
+     select  : ct.code
+
    - name    : type
      select  : ct.name
      group_by: true
      default : true
+
+   #- name    : type_description
+   #  select  : ct.description
 
    - name    : phone
      default : true
@@ -35,6 +44,15 @@ columns:
      aliases : c
      default : true
 
+   - name    : added_time
+     select  : time(c.created)
+     aliases : c
+     type    : time
+
+   - name    : added_datetime
+     select  : c.created
+     type    : datetime     
+   
    - name    : last_updated
      type    : datetime
 

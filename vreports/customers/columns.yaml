@@ -97,5 +97,8 @@ columns:
    - name    : orders
      select  : os.orders
      type    : integer
+     # HACK
+     report_link: orders
+     report_key: customer_id
      aggregate_func: sum
      default : true

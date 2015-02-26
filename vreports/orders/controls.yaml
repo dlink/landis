@@ -17,6 +17,9 @@ controls:
    - name   : order_id
      filter : o.id = {value}
 
+   - name   : customer_id
+     filter : o.customer_id = {value}
+
    - name   : name
      filter : concat_ws(' ', c.first_name, c.last_name) like '%{value}%'
      aliases: c

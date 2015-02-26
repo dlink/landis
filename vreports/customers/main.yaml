@@ -1,0 +1,17 @@
+# Hudson Valley Artists Report Paramaters
+
+report_title    : Customers Report
+base_table      : customers
+base_table_alias: c
+debug_cgi       : false
+debug_sql       : false
+display_num_rows: 100
+sort_by         : name:asc
+
+database:
+   host  : localhost
+   user  : landis
+   passwd: REDmondrian5
+   db    : landis
+
+

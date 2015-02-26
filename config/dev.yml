@@ -1,0 +1,12 @@
+environment: development
+base_dir: /home/dlink/landis
+
+database:
+   engine: mysql
+   host  : localhost
+   user  : landis
+   passwd: REDmondrian5
+   db    : landis
+   dictcursor: True
+
+

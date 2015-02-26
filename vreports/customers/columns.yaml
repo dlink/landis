@@ -1,0 +1,47 @@
+# Books Report Columns Data
+
+columns:
+   - name    : customer_data
+     type    : separator
+
+   - name    : id
+
+   - name    : name
+     select  : concat_ws(' ', c.first_name, c.last_name)
+     aliases : c
+     default : true
+
+   - name    : first_name
+
+   - name    : last_name
+
+   - name    : company
+     default : true
+
+   - name    : type
+     select  : ct.name
+     group_by: true
+     default : true
+
+   - name    : phone
+     default : true
+
+   - name    : email
+     default : true
+
+   - name    : added
+     select  : date(c.created)
+     type    : datetime
+     aliases : c
+     default : true
+
+   - name    : last_updated
+     type    : datetime
+
+   - name   : count
+     select : '*'
+     aliases: c
+     mode   : aggregate
+     aggregate_func: count
+     type   : integer
+     default: true

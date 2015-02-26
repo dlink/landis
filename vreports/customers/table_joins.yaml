@@ -1,0 +1,3 @@
+table_joins:
+   ct:
+      clause: join customer_types ct on c.type_id = ct.id

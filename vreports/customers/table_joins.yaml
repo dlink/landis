@@ -1,3 +1,9 @@
 table_joins:
    ct:
       clause: join customer_types ct on c.type_id = ct.id
+   os:
+      clause: >
+         left join
+            (select customer_id, count(*) as orders
+             from orders group by 1)
+         os on c.id = os.customer_id

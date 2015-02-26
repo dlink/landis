@@ -90,3 +90,9 @@ columns:
      aggregate_func: count
      type    : integer
      default : true
+
+   - name    : orders
+     select  : os.orders
+     type    : integer
+     aggregate_func: sum
+     default : true

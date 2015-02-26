@@ -4,7 +4,10 @@ columns:
    - name    : customer_data
      type    : separator
 
-   - name    : id
+   - name    : customer_id
+     select  : c.id
+     type    : integer
+     default : true
 
    - name    : name
      select  : concat_ws(' ', c.first_name, c.last_name)

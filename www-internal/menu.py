@@ -9,8 +9,11 @@ class Menu(object):
       return target in sys.argv[0]
 
     def getMenu(self):
-        reports= [['Customers', '?r=customers'],
-                  ['Orders'   , '?r=orders'],
+        # hack hard coding
+        baseurl = 'http://dev.crowfly.net/landis-reporting'
+
+        reports= [['Customers', '%s?r=customers' % baseurl],
+                  ['Orders'   , '%s?r=orders' % baseurl],
                   ]
         this_report = sys.argv[0]
         menu_html = self.getHtml(reports)

@@ -2,7 +2,7 @@
 
 from vweb.html import *
 
-LOGO = 'Reports'
+LOGO = 'Landis Refining Co., Inc.'
 
 class Header(object): 
 

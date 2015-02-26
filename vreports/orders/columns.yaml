@@ -35,13 +35,36 @@ columns:
      type    : integer
      group_by: true
 
+   # customer
+   - name    : customer_id
+     select  : o.customer_id
+     type    : integer
+
+   - name    : customer
+     select  : concat_ws(' ', c.first_name, c.last_name)
+     aliases : c
+     default : true
+
+   - name    : first_name
+     select  : c.first_name
+
+   - name    : last_name
+     select  : c.last_name
+
+   - name    : company
+     select  : c.company
+     default : true
+
+   - name    : customer_type
+     select  : ct.name
+     default : true
+
    # created
 
    - name    : created
      select  : date(o.created)
      type    : date
      aliases : o
-     default : true
 
    - name    : created_time
      select  : time(o.created)
@@ -58,7 +81,6 @@ columns:
      select  : date(o.created)
      aliases : o
      type    : date
-     default : true
 
    - name    : last_updated_time
      select  : time(o.last_updated)
@@ -90,9 +112,6 @@ columns:
    - name    : product_id
      select  : oi.product_id
      type    : integer
-
-   - name    : product_code
-     select  : p.code
 
    - name    : product
      select  : p.name

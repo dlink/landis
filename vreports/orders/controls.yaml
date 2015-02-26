@@ -1,4 +1,22 @@
 controls:
+
+   - name: created_min
+     display: Ordered on or After
+     type: date
+     filter: o.order_date >= '{value}'
+     aliases: o
+     default: ""
+
+   - name: created_max
+     display: Ordered on or Before
+     type: date
+     filter: date(o.order_date) <= '{value}'
+     aliases: o
+     default: ""
+   
+   - name   : order_id
+     filter : o.id = {value}
+
    - name   : name
      filter : concat_ws(' ', c.first_name, c.last_name) like '%{value}%'
      aliases: c

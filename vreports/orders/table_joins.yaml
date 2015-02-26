@@ -1,4 +1,9 @@
 table_joins:
+   c:
+      clause: join customers c on o.customer_id = c.id
+   ct:
+      require: c
+      clause: join customer_types ct on c.type_id = ct.id
    oi:
       clause: join order_items oi on o.id = oi.order_id
    p:

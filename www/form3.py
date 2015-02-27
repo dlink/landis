@@ -31,6 +31,7 @@ class Form3(object):
 
         return div(''.join([intro,
                             table.getTable(),
+                            '&nbsp;<br/', 
                             prev3 + ' | ' + next3]),
                    
                    id='order_form3')

@@ -23,6 +23,7 @@ class OrderForm(HtmlPage):
             #'http://fonts.googleapis.com/css?family=Source+Sans+Pro' \
             #    ':200,300,400,600,700,900',
             'css/default.css',
+            'css/form.css',
             'css/fonts.css',
             #'http://fonts.googleapis.com/css?family=Droid+Sans|Lobster',
             ]
@@ -170,14 +171,15 @@ class OrderForm(HtmlPage):
     def getBody_top_part(self):
         return '''
 <div id="page" class="container">
-   <div id="content">
-      <div class="title">
-         <h2>ORDER FORM</h2>
-         <span class="byline">
-            Customer Service Available <br />
-            Monday - Friday 9:00 a.m. - 5:00 pm EST
-         </span>
-      </div>
+   <div class="title">
+      <h2>ORDER FORM</h2>
+      <span class="byline">
+         Customer Service Available <br />
+         Monday - Friday 9:00 a.m. - 5:00 pm EST
+      </span>
+   </div>
+   &nbsp;<br/>
+   <div id="form">
 '''
 
     def getBody_bottom_part(self):

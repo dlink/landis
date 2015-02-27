@@ -33,7 +33,6 @@ class OrderForm(HtmlPage):
 
         self.customers = Customers()
         self.orders = Orders()
-        self.debug_cgi = 1
         self.user_msg = 'there is no user message yet'
 
     def process(self):

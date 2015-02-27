@@ -1,0 +1,11 @@
+export l=$HOME/landis   ; alias l='cd $l'
+export lb=$l/bin        ; alias lb='cd $lb'
+export lc=$l/config     ; alias lc='cd $lc'
+export lsql=$l/sql      ; alias lsql='cd $lsql'
+export lsd=$lsql/data   ; alias lsd='cd $lsd'
+export lt=$l/tests      ; alias lt='cd $lt'
+export lv=$l/vreports   ; alias lv='cd $lv'
+export lw=$l/www        ; alias lw='cd $lw'
+export lwi=$l/www-internal; alias lwi='cd $lwi'
+
+export lb=$l/bin        ; alias lb='cd $lb'

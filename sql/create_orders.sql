@@ -3,7 +3,7 @@ set foreign_key_checks = 0;
 drop table /*! if exists */ orders;
 
 create table orders (
-    id             integer unsigned  not null primary key,
+    id             integer unsigned  not null primary key auto_increment,
     order_date     datetime          not null,
     customer_id    integer unsigned  not null,
 

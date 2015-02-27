@@ -3,7 +3,7 @@ set foreign_key_checks = 0;
 drop table /*! if exists */ customers;
 
 create table customers (
-    id             integer unsigned  not null primary key,
+    id             integer unsigned  not null primary key auto_increment,
     type_id        integer unsigned  not null,
     email          varchar(128)      not null,
     first_name     varchar(128)      ,

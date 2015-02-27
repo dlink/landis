@@ -30,10 +30,11 @@ $(function() {
 	$('#order_form3').hide();
     });
     $('#next3').click(function() {
-	if (!validateForm3()) {
+	/*if (!validateForm3()) {
 	    return;
-	}
-	alert('done');
+	}*/
+	// alert('done');
+	$("form[name*='form1']").submit();
 	/* $('#order_form1').hide();
 	$('#order_form2').hide();
 	$('#order_form3').hide();
@@ -119,6 +120,9 @@ function validateForm2() {
  * Validate Form3
  */
 function validateForm3() {
+
+    // Debug
+    return true;
 
     // Unset color of fields:
     $('#order_form3 input').each(function() {

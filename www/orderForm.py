@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from datetime import datetime
+
 from vweb.htmlpage import HtmlPage
 
 from containers_form1 import ContainersForm1
@@ -10,6 +12,7 @@ class OrderForm(HtmlPage):
 
     def __init__(self):
         HtmlPage.__init__(self, 'Order Form')
+        self.debug_cgi = 1
         self.title = 'ORDER A CONTAINER - Landis Refining Co., Inc.'
         self.javascript_src = [
             '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
@@ -25,10 +28,36 @@ class OrderForm(HtmlPage):
         #<!--[if IE 6]>
         #<link href="default_ie6.css" rel="stylesheet" type="text/css" />
         #<![endif]-->
-        self.debug_cgi = 1
 
     def process(self):
-        pass
+        HtmlPage.process(self)
+        field_names = ['customer_type', 'single_jars']
+
+        try:
+            if 'customer_type_id' in self.form: # data submitted
+                self.addOrderRecord()
+        except Exception, e:
+            raise # future - trap error and log it.
+
+    def addOrderRecord(self):
+        # get customer based on email if exists
+        try:
+            customer = self.customer(email)
+        except CustomerNotFound, e:
+            customer = None
+
+        # Add new customer
+        if not customer:
+            customer = {'email': email
+                        }
+            customer = self.customers.add(customer)
+            
+        # Add order:
+        record = {
+            'order_date': datetime.now(),
+            'customer_id': customer.id
+            }
+        self.order.add(record)
 
     def getHtmlContent(self):
         return \

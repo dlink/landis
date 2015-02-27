@@ -2,22 +2,33 @@
 
 from vweb.htmlpage import HtmlPage
 
+from containers_form1 import ContainersForm1
+from containers_form2 import ContainersForm2
+from containers_form3 import ContainersForm3
+
 class OrderForm(HtmlPage):
 
     def __init__(self):
         HtmlPage.__init__(self, 'Order Form')
         self.title = 'ORDER A CONTAINER - Landis Refining Co., Inc.'
+        self.javascript_src = [
+            '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+            'js/containers.js']
         self.style_sheets = [
-            'http://fonts.googleapis.com/css?family=Source+Sans+Pro' \
-                ':200,300,400,600,700,900',
+            #'http://fonts.googleapis.com/css?family=Source+Sans+Pro' \
+            #    ':200,300,400,600,700,900',
             'css/default.css',
             'css/fonts.css',
-            'http://fonts.googleapis.com/css?family=Droid+Sans|Lobster',
+            #'http://fonts.googleapis.com/css?family=Droid+Sans|Lobster',
             ]
         # To Do: do we need this for IE 6?
         #<!--[if IE 6]>
         #<link href="default_ie6.css" rel="stylesheet" type="text/css" />
         #<![endif]-->
+        self.debug_cgi = 1
+
+    def process(self):
+        pass
 
     def getHtmlContent(self):
         return \
@@ -56,6 +67,14 @@ class OrderForm(HtmlPage):
 </div>'''
 
     def getBody(self):
+        return \
+            self.getBody_top_part() + \
+            ContainersForm1().get() + \
+            ContainersForm2().get() + \
+            ContainersForm3().get() + \
+            self.getBody_bottom_part()
+
+    def getBody_top_part(self):
         return '''
 <div id="page" class="container">
    <div id="content">
@@ -66,14 +85,17 @@ class OrderForm(HtmlPage):
             Monday - Friday 9:00 a.m. - 5:00 pm EST
          </span>
       </div>
-      <p align="left">Place holder until the real one is created.</p>
-   </div>
+'''
+
+    def getBody_bottom_part(self):
+        return '''
+  </div>
 
    <div id="sidebar">
       <p>&nbsp;</p>
       <p>&nbsp;</p>
       <p>&nbsp;</p>
-      <p>&nbsp;</p> 
+      <p>&nbsp;</p>
    </div>
 </div>
 '''

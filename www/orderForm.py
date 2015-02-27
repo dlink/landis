@@ -45,18 +45,34 @@ class OrderForm(HtmlPage):
                 self.addOrderRecord()
         except Exception, e:
             # Need to sanitize this for production
-            self.user_msg += 'Sorry there was a problem: %s: %s' \
+            self.user_msg = 'Sorry there was a problem: %s: %s' \
                 % (e.__class__.__name__, e)
 
+    def fromForm(self, field):
+        if field in self.form:
+            return self.form[field].value
+        else:
+            return None
+
     def addOrderRecord(self):
-        company = None
-        if 'business_name' in self.form:
-            company = self.form['business_name'].value
 
-        customer_type = self.form['customer_type'].value
-        email         = self.form['email'].value
+        # Get data from the form:
+        customer_type = self.fromForm('customer_type')
+        email = self.fromForm('email')
+        phone = self.fromForm('phone')
+        name  = self.fromForm('your_name')
+        parts = name.split(' ')
+        if len(parts) == 1:
+            first_name = None
+            last_name = name
+        else:
+            first_name = ' '.join(parts[0:-1])
+            last_name = parts[-1]
+        company  = self.fromForm('business_name')
+        single   = self.fromForm('single_jar')
+        multiple = self.fromForm('multiple_jars')
+        mailer   = self.fromForm('patient_scrap_mailer')
 
-        self.user_msg += 'customer_type: "%s"' % customer_type
         # get customer based on email if exists
         try:
             customer = Customer(email)
@@ -65,9 +81,13 @@ class OrderForm(HtmlPage):
 
         # Add new customer
         if not customer:
-            customer = {'company': company,
-                        'type_id': customer_type,
-                        'email'  : email,
+            customer = {
+                        'type_id'   : customer_type,
+                        'email'     : email,
+                        'first_name': first_name,
+                        'last_name' : last_name,
+                        'company'   : company,
+                        'phone'     : phone,
                         }
             customer = self.customers.add(customer)
             
@@ -78,7 +98,19 @@ class OrderForm(HtmlPage):
             }
         order_id = self.orders.add(record)
 
-        self.user_msg += 'Thank you for your order number: %s' % order_id
+        # Add order items:
+        if single:
+            self.orders.addOrderItem(
+                {'order_id': order_id,'product_id': 1, 'quantity': single})
+        if multiple:
+            self.orders.addOrderItem(
+                {'order_id': order_id,'product_id': 2, 'quantity': multiple})
+        if mailer:
+            self.orders.addOrderItem(
+                {'order_id': order_id, 'product_id': 3,'quantity'  : mailer})
+
+        # Set user message
+        self.user_msg = 'Thank you for your order number: %s' % order_id
 
     def getHtmlContent(self):
         return \

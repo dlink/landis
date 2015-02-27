@@ -5,6 +5,7 @@ from vlib import db
 from vlib.datatable import DataTable
 
 class OrderError(Exception): pass
+class OrderItemError(OrderError): pass
 
 class Orders(object):
 
@@ -21,3 +22,11 @@ class Orders(object):
 
         return order_id
 
+    def addOrderItem(self, record):
+        oi = DataTable(self.db, 'order_items')
+        record['created'] = datetime.now()
+        try:
+            order_item_id = oi.insertRow(record)
+        except Exception, e:
+            raise OrderItemError('Unable to insert row: %s' % e)
+        return order_item_id

@@ -1,7 +1,7 @@
 from vweb.htmltable import HtmlTable
 from vweb.html import *
 
-class ContainersForm2(object):
+class Form2(object):
 
     def get(self):
         intro = p('What container types do you want?:', id='form2Intro')

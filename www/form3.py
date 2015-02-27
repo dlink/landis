@@ -1,7 +1,7 @@
 from vweb.htmltable import HtmlTable
 from vweb.html import *
 
-class ContainersForm3(object):
+class Form3(object):
 
     def get(self):
         intro = p('Your address information')

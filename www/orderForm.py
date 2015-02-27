@@ -7,9 +7,9 @@ from vweb.htmlpage import HtmlPage
 from customers import Customers, Customer, CustomerNotFound
 from orders import Orders
 
-from containers_form1 import ContainersForm1
-from containers_form2 import ContainersForm2
-from containers_form3 import ContainersForm3
+from form1 import Form1
+from form2 import Form2
+from form3 import Form3
 
 class OrderForm(HtmlPage):
 
@@ -162,9 +162,9 @@ class OrderForm(HtmlPage):
     def getBody(self):
         return \
             self.getBody_top_part() + \
-            ContainersForm1().get() + \
-            ContainersForm2().get() + \
-            ContainersForm3().get() + \
+            Form1().get() + \
+            Form2().get() + \
+            Form3().get() + \
             self.getBody_bottom_part()
 
     def getBody_top_part(self):

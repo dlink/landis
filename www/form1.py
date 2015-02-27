@@ -1,6 +1,6 @@
 from vweb.html import *
 
-class ContainersForm1(object):
+class Form1(object):
 
     def get(self):
 

@@ -16,7 +16,7 @@ create table customers (
          default current_timestamp on update current_timestamp,
 
     unique key email (email),
-    unique key company (company),
+    -- unique key company (company),
     unique key name (first_name, last_name),
     foreign key (type_id) references customer_types (id)
 )

@@ -13,8 +13,8 @@ class ContainersForm3(object):
                   'State',
                   'Zip',
                   'Contact Name',
-                  'Email Address',
-                  'Confirm Email Address',
+                  'Email',
+                  'Confirm Email',
                   'Phone Number']
 
         table = HtmlTable()

@@ -4,6 +4,9 @@ from datetime import datetime
 
 from vweb.htmlpage import HtmlPage
 
+from customers import Customers, Customer, CustomerNotFound
+from orders import Orders
+
 from containers_form1 import ContainersForm1
 from containers_form2 import ContainersForm2
 from containers_form3 import ContainersForm3
@@ -12,7 +15,6 @@ class OrderForm(HtmlPage):
 
     def __init__(self):
         HtmlPage.__init__(self, 'Order Form')
-        self.debug_cgi = 1
         self.title = 'ORDER A CONTAINER - Landis Refining Co., Inc.'
         self.javascript_src = [
             '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
@@ -29,26 +31,43 @@ class OrderForm(HtmlPage):
         #<link href="default_ie6.css" rel="stylesheet" type="text/css" />
         #<![endif]-->
 
+        self.customers = Customers()
+        self.orders = Orders()
+        self.debug_cgi = 1
+        self.user_msg = 'there is no user message yet'
+
     def process(self):
         HtmlPage.process(self)
         field_names = ['customer_type', 'single_jars']
 
         try:
-            if 'customer_type_id' in self.form: # data submitted
+            if 'customer_type' in self.form: # data submitted
                 self.addOrderRecord()
         except Exception, e:
-            raise # future - trap error and log it.
+            # Need to sanitize this for production
+            self.user_msg += 'Sorry there was a problem: %s: %s' \
+                % (e.__class__.__name__, e)
 
     def addOrderRecord(self):
+        company = None
+        if 'business_name' in self.form:
+            company = self.form['business_name'].value
+
+        customer_type = self.form['customer_type'].value
+        email         = self.form['email'].value
+
+        self.user_msg += 'customer_type: "%s"' % customer_type
         # get customer based on email if exists
         try:
-            customer = self.customer(email)
+            customer = Customer(email)
         except CustomerNotFound, e:
             customer = None
 
         # Add new customer
         if not customer:
-            customer = {'email': email
+            customer = {'company': company,
+                        'type_id': customer_type,
+                        'email'  : email,
                         }
             customer = self.customers.add(customer)
             
@@ -57,12 +76,15 @@ class OrderForm(HtmlPage):
             'order_date': datetime.now(),
             'customer_id': customer.id
             }
-        self.order.add(record)
+        order_id = self.orders.add(record)
+
+        self.user_msg += 'Thank you for your order number: %s' % order_id
 
     def getHtmlContent(self):
         return \
             self.getLogo() + \
             self.getHeader() + \
+            self.getUserMsg() + \
             self.getBody() + \
             self.getFooter()
 
@@ -94,6 +116,17 @@ class OrderForm(HtmlPage):
       </ul>
    </div>
 </div>'''
+
+    def getUserMsg(self):
+        if self.user_msg:
+            return '''
+<div id='userMsg'>
+   <div class='container'>
+      <center><p>%s</p></center>
+   </div>
+</div>
+''' % self.user_msg
+        return ''
 
     def getBody(self):
         return \

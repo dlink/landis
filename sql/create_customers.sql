@@ -8,7 +8,7 @@ create table customers (
     email          varchar(128)      not null,
     first_name     varchar(128)      ,
     last_name      varchar(128)      not null,
-    company        varchar(128)      not null,
+    company        varchar(128)      ,
     phone          varchar(128)      ,
 
     created        datetime          not null,

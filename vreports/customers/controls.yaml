@@ -7,6 +7,9 @@ controls:
      filter : c.company like '%{value}%'
      aliases: c
 
+   - name   : emails
+     filter : c.email like '%{value}%'
+
    - name   : type
      type   : menu
      menu   :

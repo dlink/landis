@@ -28,6 +28,16 @@ controls:
      filter : c.company like '%{value}%'
      aliases: c
 
+   - name   : product
+     Display: Ya stuff
+     type   : menu
+     menu   :
+        0: All
+        1: Single Jar
+        2: Multiple Jars
+        3: Scrap Mailer
+     filter : oi.product_id = {value}
+
    - name   : type
      type   : menu
      menu   :

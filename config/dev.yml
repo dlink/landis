@@ -9,4 +9,10 @@ database:
    db    : landis
    dictcursor: True
 
+email:
+   server  : smtp.gmail.com:587
+   username: username
+   password: password
+   fromaddr: Landis Refining customerservice@LandisRefining.com
+
 

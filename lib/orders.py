@@ -8,6 +8,7 @@ class OrderError(Exception): pass
 class OrderItemError(OrderError): pass
 
 class Orders(object):
+    '''Preside over Order in the database'''
 
     def __init__(self):
         self.db = db.getInstance()

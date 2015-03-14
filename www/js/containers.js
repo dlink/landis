@@ -62,6 +62,9 @@ $(function() {
 	$(this).css('cursor', 'default');
 	$(this).css('text-decoration', 'none');
     })
+
+    // phone number mask
+    $('#phone_number').mask('(999) 999-9999');
 });
 
 

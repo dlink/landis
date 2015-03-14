@@ -23,7 +23,7 @@ class Form3(object):
             description_name = '%s_text' % name
             description = span(field, id=description_name)
             table.addRow([description, input(type='textfield', name=name, 
-                                             size=50)])
+                                             id=name, size=50)])
 
         # next/prev
         next3 = span('Next>', id='next3', class_='textButton')

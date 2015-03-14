@@ -18,6 +18,7 @@ class OrderForm(HtmlPage):
         self.title = 'ORDER A CONTAINER - Landis Refining Co., Inc.'
         self.javascript_src = [
             '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+            'js/jq/jquery.mask.min.js',
             'js/containers.js']
         self.style_sheets = [
             #'http://fonts.googleapis.com/css?family=Source+Sans+Pro' \
@@ -34,7 +35,7 @@ class OrderForm(HtmlPage):
 
         self.customers = Customers()
         self.orders = Orders()
-        self.user_msg = 'there is no user message yet'
+        self.user_msg = ''
 
     def process(self):
         HtmlPage.process(self)

@@ -46,13 +46,13 @@ td {
 	border-right-style: none;
 	border-bottom-style: none;
 	border-left-style: none;
-	height: 15px;
-	text-align: center;
-	font-style: italic;
+	// height: 15px;
+	// text-align: center;
+	// font-style: italic;
 	background-image: none;
 }
 tr {
-	height: 20px;
+	// height: 20px;
 	color: #333333;
 }
 

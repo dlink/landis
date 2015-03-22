@@ -1,4 +1,19 @@
 #form {
    // background-color: red;
-   margin-left: 300px;
+  // margin-left: 300px;
 } 
+
+.style1 {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-weight: bold;
+}
+
+.style2 {font-family: Verdana, Arial, Helvetica, sans-serif}
+
+.style4 {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 18px;
+font-weight: bold;
+}
+
+.style5 {font-size: 18px}

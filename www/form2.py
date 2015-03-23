@@ -4,37 +4,49 @@ from vweb.html import *
 class Form2(object):
 
     def get(self):
-        intro = p('What container types do you want?:', id='form2Intro')
+        return '''
+<div id="order_form2"><p align="center" class="style1" id="form2Intro">What container types do you want?:</p>
+<center><table width="30%" cellpadding="5" cellspacing="0" >
+<tbody>
+<tr>
+<td><div align="center" class="style1">Qty</div></td>
+<td>&nbsp;</td>
+<td><span class="style1">Container type</span></td>
+</tr>
+<tr>
+<td><div align="center">
+<input class="numberField" type="textfield" name="single_jar" size="5" />
+</div></td>
+<td>&nbsp;</td>
+<td><span class="style2">Single Jar</span></td>
+</tr>
+<tr>
+<td><div align="center">
+<input class="numberField" type="textfield" name="multiple_jars" size="5" />
+</div></td>
+<td>&nbsp;</td>
+<td><span class="style2">Multiple Jars</span></td>
+</tr>
+<tr>
+<td><div align="center">
+<input class="numberField" type="textfield" name="patient_scrap_mailer" size="5" />
+</div></td>
+<td>&nbsp;</td>
+<td><span class="style2">Patient Scrap Mailer</span></td>
+</tr>
+</tbody>
+</table>
+</center><br/>
 
-        single_jar = input(type='textfield', name='single_jar', 
-                           size=5, class_='numberField')
-        single_jar_text = span('Single Jar', id='single_jar_text')
+<div align="center">
+   <br/>
+   <span class="textButton" id="prev2">
+      <img src='images/left_arrow.png'/>
+   </span>
 
-        multiple_jars = input(type='textfield', name='multiple_jars', 
-                              size=5, class_='numberField')
-        multiple_jars_text = span('Multiple Jars', id='multiple_jars_text')
-
-        patient_scrap_mailer = input(type='textfield', 
-                                     name='patient_scrap_mailer', size=5,
-                                     class_='numberField')
-
-        patient_scrap_mailer_text = span('Patient Scrap Mailer', 
-                                         id='patient_scrap_mailer_text')
-
-        table = HtmlTable()
-        table.addRow(['Qty'               , 'Container type'])
-        table.addRow([single_jar          , single_jar_text])
-        table.addRow([multiple_jars       , multiple_jars_text])
-        table.addRow([patient_scrap_mailer, patient_scrap_mailer_text])
-                     
-        # next/prev
-        prev2 = span('&lt;Prev', id='prev2', class_='textButton')
-        next2 = span('Next>', id='next2', class_='textButton')
-
-        return div(''.join([intro,
-                            table.getTable(),
-                            '&nbsp;<br/', 
-                            prev2 + ' | ' + next2]),
-                   
-                   id='order_form2')
-
+   <span class="textButton" id='next2'>
+      <img src='images/right_arrow.png'/>   
+   </span>
+</div>
+</div>
+'''

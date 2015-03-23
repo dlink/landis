@@ -5,24 +5,6 @@ class Form3(object):
 
     def get(self):
         return '''
-<style type="text/css">
-<!--
-.style1 {
-font-family: Verdana, Arial, Helvetica, sans-serif;
-font-weight: bold;
-}
-.style2 {font-family: Verdana, Arial, Helvetica, sans-serif}
-.style4 {
-font-family: Verdana, Arial, Helvetica, sans-serif;
-font-size: 18px;
-font-weight: bold;
-}
-.style5 {font-size: 18px}
--->
-</style>
-</head>
-
-<body>
 <div id="order_form3">
 <p align="center" class="style1">Enter your shipping information</p>
 <center> <table width="50%" cellpadding="0" cellspacing="0">
@@ -90,13 +72,22 @@ font-weight: bold;
 <tr>
 <td><span class="style2" id="phone_number_text">Phone Number</span></td>
 <td>&nbsp;</td>
-<td><input type="textfield" name="phone_number" size="50" /></td>
+<td><input type="textfield" class='phone_number' name="phone_number" size="50" /></td>
 </tr>
 </tbody>
 </table>
 </center>
 &nbsp;
-<div align="center"><br/>
-<span class="textButton style2 style5" id="prev3"><strong>&lt;Prev</strong></span><span class="style4"> | Next></span></div>
+<div align="center">
+   <br/>
+   <span class="textButton style2 style5" id="prev3">
+      <img src='images/left_arrow.png'/>
+   </span>
+
+   <span class="style4" id='next3'>
+      <strong>[Submit Form]</strong>
+   </span>
+</div>
+
 </div>
 '''

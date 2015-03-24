@@ -6,10 +6,17 @@ from vweb.htmlpage import HtmlPage
 
 from customers import Customers, Customer, CustomerNotFound
 from orders import Orders
+from mailer import send_mail
 
 from form1 import Form1
 from form2 import Form2
 from form3 import Form3
+
+EMAIL_SUBJECT = 'Landis Refining Co., Inc. - Order Confirmation'
+EMAIL_FROM_NAME = 'Info - Landis Refining Co'
+#EMAIL_FROM_ADDR = 'info@landisrefining.com>'
+EMAIL_FROM_ADDR = 'info@crowfly.net'
+EMAIL_BCC_ADDR = 'dvlink@gmail.com,andy@agodfrey.com'
 
 class OrderForm(HtmlPage):
 
@@ -36,24 +43,39 @@ class OrderForm(HtmlPage):
         self.customers = Customers()
         self.orders = Orders()
         self.user_msg = ''
+        self.order_submitted = 0
 
     def process(self):
         HtmlPage.process(self)
         field_names = ['customer_type', 'single_jars']
 
         try:
-            if 'customer_type' in self.form: # data submitted
-                self.addOrderRecord()
+            if 'customer_type' in self.form:
+                order_id = self.addOrderRecord()
+                self.sendConfirmationEmail()
+                self.user_msg = \
+                    'Thank you for your order number: %s.<br/>' \
+                    'An email confirmation has been sent to %s' \
+                    % (order_id, self.fromForm('email'))
+                self.order_submitted = 1
         except Exception, e:
             # Need to sanitize this for production
             self.user_msg = 'Sorry there was a problem: %s: %s' \
                 % (e.__class__.__name__, e)
 
     def fromForm(self, field):
+        '''Return value from the form field or None'''
         if field in self.form:
             return self.form[field].value
         else:
             return None
+
+    def fromForm2(self, field):
+        '''Return value from the form field or "" '''
+        if field in self.form:
+            return self.form[field].value
+        else:
+            return ''
 
     def addOrderRecord(self):
 
@@ -110,14 +132,77 @@ class OrderForm(HtmlPage):
             self.orders.addOrderItem(
                 {'order_id': order_id, 'product_id': 3,'quantity'  : mailer})
 
-        # Set user message
-        self.user_msg = 'Thank you for your order number: %s' % order_id
+        return order_id
+
+    def sendConfirmationEmail(self):
+        name  = self.fromForm('your_name')
+        email = self.fromForm('email')
+        from_name = EMAIL_FROM_NAME
+        from_email = EMAIL_FROM_ADDR
+
+        send_mail(to_name=name,
+                  to_addr=email,
+                  from_name=EMAIL_FROM_NAME,
+                  from_addr=EMAIL_FROM_ADDR,
+                  bcc=EMAIL_BCC_ADDR,
+                  subject=EMAIL_SUBJECT,
+                  html_body=self.getConfirmationEmailBody())
+
+    def getConfirmationEmailBody(self):
+        customer_types = {'1': 'Dentist',
+                          '2': 'Dentist Staff',
+                          '3': 'Patient',
+                          '4': 'Jeweler'}
+        customer_type = customer_types[self.fromForm('customer_type')]
+
+        data = dict(your_name=self.fromForm2('your_name'),
+                    customer_type=customer_type,
+                    dentist_name=self.fromForm2('dentist_name'),
+                    dentist_phone=self.fromForm2('dentist_phone'),
+                    business_name=self.fromForm2('business_name'),
+                    address=self.fromForm2('address'),
+                    city=self.fromForm2('city'),
+                    state=self.fromForm2('state'),
+                    zip=self.fromForm2('zip'),
+                    phone=self.fromForm2('phone'),
+                    single_jar=self.fromForm2('single_jar'),
+                    multiple_jars=self.fromForm2('multiple_jars'),
+                    patient_scrap_mailer=self.fromForm2('patient_scrap_mailer')
+                    ,
+                    email=self.fromForm2('email'),
+                    contact_name=self.fromForm2('contact_name'))
+
+        html_body = '''
+<img src='http://www.agodfrey.com/demo/lrc/images/landisBanner.jpg'>
+<p>Thank you {your_name}. Your order has been submitted.<br><br>
+Please review the information below.
+If you have any questions please call us at 800-433-6192.<br><br>
+<table border='1' >
+   <tr><td><b>Name</b></td><td>{your_name}</td></tr>
+   <tr><td><b>Customer Type: </b></td><td>{customer_type}</td></tr>
+   <tr><td><b>Referring Dentist:</b></td><td>{dentist_name}</td></tr>
+   <tr><td><b>Referring Phone:</b></td><td>{dentist_phone}</td></tr>
+   <tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>
+   <tr><td><b>Business</b></td><td>{business_name}</td></tr>
+   <tr><td><b>Address</b></td><td>{address}</td></tr>
+   <tr><td><b>City</b></td><td>{city}</td></tr>
+   <tr><td><b>State</b></td><td>{state}</td></tr>
+   <tr><td><b>Zip Code</b></td><td>{zip}</td></tr>
+   <tr><td><b>Phone:</b></td><td>{phone}</td></tr>
+   <tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>
+   <tr><td><b>Single Jars</b></td><td>{single_jar}</td></tr>
+   <tr><td><b>Multiple Jars</b></td><td>{multiple_jars}</td></tr>
+   <tr><td><b>Patient Scrap Mailers</b></td><td>{patient_scrap_mailer}</td></tr>
+   <tr><td><b>&nbsp;</b></td><td>&nbsp;</td></tr>
+   <tr><td><b>Email</b></td><td>{email}</td></tr>
+   <tr><td><b>Contact</b></td><td>{contact_name}</td></tr>
+</table>'''.format(**data)
+        return html_body
 
     def getHtmlContent(self):
         return \
             self.getLogo() + \
             self.getHeader() + \
-            self.getUserMsg() + \
             self.getBody() + \
             self.getFooter()
 
@@ -162,12 +247,17 @@ class OrderForm(HtmlPage):
         return ''
 
     def getBody(self):
-        return \
-            self.getBody_top_part() + \
-            Form1().get() + \
-            Form2().get() + \
-            Form3().get() + \
-            self.getBody_bottom_part()
+        o = ''
+        o += self.getBody_top_part()
+        o += self.getUserMsg()
+
+        if not self.order_submitted:
+            o += Form1().get()
+            o += Form2().get()
+            o += Form3().get()
+
+        o += self.getBody_bottom_part()
+        return o
 
     def getBody_top_part(self):
         return '''

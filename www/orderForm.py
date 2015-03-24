@@ -124,13 +124,13 @@ class OrderForm(HtmlPage):
         order_id = self.orders.add(record)
 
         # Add order items:
-        if single:
+        if int(single):
             self.orders.addOrderItem(
                 {'order_id': order_id,'product_id': 1, 'quantity': single})
-        if multiple:
+        if int(multiple):
             self.orders.addOrderItem(
                 {'order_id': order_id,'product_id': 2, 'quantity': multiple})
-        if mailer:
+        if int(mailer):
             self.orders.addOrderItem(
                 {'order_id': order_id, 'product_id': 3,'quantity'  : mailer})
 

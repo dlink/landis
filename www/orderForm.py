@@ -2,6 +2,7 @@
 
 from datetime import datetime
 
+from vlib import conf
 from vweb.htmlpage import HtmlPage
 
 from customers import Customers, Customer, CustomerNotFound
@@ -22,6 +23,7 @@ class OrderForm(HtmlPage):
 
     def __init__(self):
         HtmlPage.__init__(self, 'Order Form')
+        self.conf = conf.getInstance()
         self.title = 'ORDER A CONTAINER - Landis Refining Co., Inc.'
         self.javascript_src = [
             '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
@@ -155,7 +157,8 @@ class OrderForm(HtmlPage):
                           '4': 'Jeweler'}
         customer_type = customer_types[self.fromForm('customer_type')]
 
-        data = dict(your_name=self.fromForm2('your_name'),
+        data = dict(base_url=self.conf.base_url,
+                    your_name=self.fromForm2('your_name'),
                     customer_type=customer_type,
                     dentist_name=self.fromForm2('dentist_name'),
                     dentist_phone=self.fromForm2('dentist_phone'),
@@ -173,7 +176,7 @@ class OrderForm(HtmlPage):
                     contact_name=self.fromForm2('contact_name'))
 
         html_body = '''
-<img src='http://www.agodfrey.com/demo/lrc/images/landisBanner.jpg'>
+<img src='{base_url}/images/landisBanner.jpg'>
 <p>Thank you {your_name}. Your order has been submitted.<br><br>
 Please review the information below.
 If you have any questions please call us at 800-433-6192.<br><br>

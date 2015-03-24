@@ -1,5 +1,6 @@
 environment: development
 base_dir: /home/dlink/landis
+base_url: http://dev.crowfly.net/landis
 
 database:
    engine: mysql

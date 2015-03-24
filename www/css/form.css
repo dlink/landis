@@ -17,3 +17,8 @@ font-weight: bold;
 }
 
 .style5 {font-size: 18px}
+
+#userMsg p {
+   color: green;
+   font-size: x-large;
+}

@@ -45,7 +45,7 @@ $(function() {
     $('#dentist_info').hide();
     $('#customer_type').change(function() {
 	var ct = $("input[name='customer_type']:checked").val();
-	if (ct == 2 || ct == 4) {
+	if (ct == 2 || ct == 3) {
 	    $('#dentist_info').show();
 	} else {
 	    $('#dentist_info').hide();
